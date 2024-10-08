@@ -1,11 +1,10 @@
-Google Authenticator PHP class
+Time-based one-time password PHP class
 ==============================
 
+Original: PHPGangsta/GoogleAuthenticator
 * Copyright (c) 2012-2016, [http://www.phpgangsta.de](http://www.phpgangsta.de)
 * Author: Michael Kliewe, [@PHPGangsta](http://twitter.com/PHPGangsta) and [contributors](https://github.com/PHPGangsta/GoogleAuthenticator/graphs/contributors)
 * Licensed under the BSD License.
-
-[![Build Status](https://travis-ci.org/PHPGangsta/GoogleAuthenticator.png?branch=master)](https://travis-ci.org/PHPGangsta/GoogleAuthenticator)
 
 This PHP class can be used to interact with the Google Authenticator mobile app for 2-factor-authentication. This class
 can generate secrets, generate codes, validate codes and present a QR-Code for scanning the secret. It implements TOTP 
@@ -20,32 +19,13 @@ Usage:
 
 See following example:
 
-```php
-<?php
-require_once 'PHPGangsta/GoogleAuthenticator.php';
-
-$ga = new PHPGangsta_GoogleAuthenticator();
-$secret = $ga->createSecret();
-echo "Secret is: ".$secret."\n\n";
-
-$qrCodeUrl = $ga->getQRCodeGoogleUrl('Blog', $secret);
-echo "Google Charts URL for the QR-Code: ".$qrCodeUrl."\n\n";
-
-$oneCode = $ga->getCode($secret);
-echo "Checking Code '$oneCode' and Secret '$secret':\n";
-
-$checkResult = $ga->verifyCode($secret, $oneCode, 2);    // 2 = 2*30sec clock tolerance
-if ($checkResult) {
-    echo 'OK';
-} else {
-    echo 'FAILED';
-}
 ```
+See the example in the `example.php` file
+```
+
 Running the script provides the following output:
 ```
 Secret is: OQB6ZZGYHCPSX4AK
-
-Google Charts URL for the QR-Code: https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/infoATphpgangsta.de%3Fsecret%3DOQB6ZZGYHCPSX4AK
 
 Checking Code '848634' and Secret 'OQB6ZZGYHCPSX4AK':
 OK
@@ -65,19 +45,6 @@ Installation:
   the library. Just include the following at the top of your file
 
   `require_once __DIR__ . '/../vendor/autoload.php';`
-
-Run Tests:
-----------
-
-- All tests are inside `tests` folder.
-- Execute `composer install` and then run the tests from project root
-  directory
-- Run as `phpunit tests` from the project root directory
-
-
-ToDo:
------
-- ??? What do you need?
 
 Notes:
 ------
