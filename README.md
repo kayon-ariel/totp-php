@@ -17,6 +17,7 @@ For a secure installation you have to make sure that used codes cannot be reused
 - Built-in validation methods.
 - Secret key generation for TOTP.
 - Compatible with Google Authenticator and similar apps.
+- Generate QR code payloads for easy integration with TOTP applications.
 
 ## Installation
 
@@ -65,6 +66,18 @@ You can generate a random secret key using the `createSecret` method. This is us
 ```php
 $secret = $ga->createSecret();
 echo "Your secret key is: " . $secret;
+```
+
+### Generating a QR Code Payload
+
+To generate a QR code payload for a TOTP secret, use the `getQrCodePayload` function:
+
+```php
+$label = 'user@example.com'; // The user's email or username
+$issuer = 'MyApp'; // Optional issuer name
+
+$qrcodePayload = $totp->getQrCodePayload($secret, $label, $issuer);
+echo "QR Code Payload: " . $qrcodePayload . "\n";
 ```
 
 ### Validating a TOTP Code

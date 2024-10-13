@@ -36,6 +36,20 @@ class TotpTest extends TestCase
         $this->totp->createSecret(10);  // Invalid length less than 16
     }
 
+    public function testGetQrCodePayload()
+    {
+        $secret = $this->totp->createSecret();
+        $label = 'user@example.com';
+        $issuer = 'MyApp';
+
+        $payload = $this->totp->getQrCodePayload($secret, $label, $issuer);
+
+        $this->assertStringStartsWith('otpauth://totp/', $payload);
+        $this->assertStringContainsString('totp/' . $label, $payload);
+        $this->assertStringContainsString('issuer=' . $issuer, $payload);
+        $this->assertStringContainsString('secret=' . $secret, $payload);
+    }
+
     public function testGetCode()
     {
         $secret = $this->totp->createSecret();

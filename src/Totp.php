@@ -46,6 +46,26 @@ class Totp
     }
 
     /**
+     * Generate a QR code payload for the given secret.
+     *
+     * @param string $secret The TOTP secret.
+     * @param string $label The label for the account (e.g., email, username).
+     * @param string|null $issuer Optional issuer name for the TOTP app.
+     *
+     * @return string The QR code payload.
+     */
+    public function getQrCodePayload(string $secret, string $label, ?string $issuer = null): string
+    {
+        $payload = 'otpauth://totp/' . $label . '?secret=' . $secret;
+
+        if ($issuer) {
+            $payload .= '&issuer=' . $issuer;
+        }
+
+        return $payload;
+    }
+
+    /**
      * Calculate the code, with given secret and point in time.
      *
      * @param string $secret
