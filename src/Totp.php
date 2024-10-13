@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Base32.php';
+namespace TotpPhp;
 
 /**
  * PHP Class for handling Time-based one-time password.

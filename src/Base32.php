@@ -1,5 +1,7 @@
 <?php
 
+namespace TotpPhp;
+
 /**
  * PHP Class for handling base32.
  */
@@ -21,6 +23,12 @@ class Base32
         $base32chars = $this->_getBase32LookupTable();
         $base32charsFlipped = array_flip($base32chars);
 
+        foreach (str_split($secret) as $char) {
+            if (!isset($base32charsFlipped[$char]) && $char !== '=') {
+                return false;
+            }
+        }
+
         $paddingCharCount = substr_count($secret, $base32chars[32]);
         $allowedValues = array(6, 4, 3, 1, 0);
         if (!in_array($paddingCharCount, $allowedValues)) {
@@ -34,6 +42,7 @@ class Base32
                 return false;
             }
         }
+
         $secret = str_replace('=', '', $secret);
         $secret = str_split($secret);
         $binaryString = '';
@@ -62,10 +71,38 @@ class Base32
     public function _getBase32LookupTable()
     {
         return array(
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', //  7
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', // 15
-            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', // 23
-            'Y', 'Z', '2', '3', '4', '5', '6', '7', // 31
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H', //  7
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P', // 15
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X', // 23
+            'Y',
+            'Z',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7', // 31
             '=',  // padding char
         );
     }
